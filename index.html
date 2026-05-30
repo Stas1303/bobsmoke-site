@@ -261,6 +261,7 @@
     .about-photo img {
       width: 100%; height: 100%;
       object-fit: cover;
+      object-position: right center;
       filter: brightness(0.75) saturate(0.7);
       transition: transform 0.8s ease, filter 0.5s;
     }
@@ -394,12 +395,49 @@
     }
     .product-card.wide .product-body { padding: 44px 36px; }
 
+    /* ── GALLERY ── */
+    .gallery-section { background: var(--black); padding: 0; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 320px 240px;
+      gap: 2px;
+    }
+    .g-item {
+      position: relative;
+      overflow: hidden;
+    }
+    .g-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7) saturate(0.65);
+      transition: filter 0.5s, transform 0.7s ease;
+      display: block;
+    }
+    .g-item:hover img { filter: brightness(0.9) saturate(0.85); transform: scale(1.05); }
+    .g-item.tall { grid-row: span 2; }
+    .g-cap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 36px 20px 16px;
+      background: linear-gradient(to top, rgba(10,9,7,0.8) 0%, transparent 100%);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(184,148,58,0.7);
+    }
+    .g-item.pano img {
+      object-position: center 40%;
+      filter: brightness(0.55) saturate(0.5);
+    }
+
     /* ── VIDEO ── */
     .video-section {
       background: var(--surface);
       padding: 0;
       position: relative;
-      min-height: 520px;
+      min-height: 480px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -407,71 +445,65 @@
     }
     .video-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, var(--surface2) 0%, var(--black) 100%);
     }
-    .video-placeholder {
+    .video-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: brightness(0.18) saturate(0.4);
+    }
+    .video-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 0%, rgba(10,9,7,0.6) 100%);
+    }
+    .video-inner {
       position: relative;
       z-index: 2;
       text-align: center;
       padding: 80px 56px;
     }
-    .video-embed {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .video-embed-inner {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 2px;
-      border: 1px solid rgba(184,148,58,0.15);
-    }
-    .video-embed-inner iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-    }
     .video-play-btn {
       width: 80px; height: 80px;
       border-radius: 50%;
-      border: 1px solid rgba(184,148,58,0.4);
+      border: 1px solid rgba(184,148,58,0.45);
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 32px;
-      transition: border-color 0.3s, background 0.3s;
-      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
     }
     .video-play-btn:hover {
       border-color: var(--gold);
       background: rgba(184,148,58,0.1);
+      transform: scale(1.08);
     }
     .video-play-icon {
       width: 0; height: 0;
       border-top: 14px solid transparent;
       border-bottom: 14px solid transparent;
       border-left: 22px solid var(--gold);
-      margin-left: 4px;
+      margin-left: 5px;
     }
     .video-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
+      font-size: 40px;
       font-weight: 600;
       color: var(--white);
       margin-bottom: 12px;
     }
-    .video-sub { font-size: 13px; color: var(--cream-dim); letter-spacing: 0.1em; }
-    .video-tg-link {
+    .video-sub {
+      font-size: 13px;
+      color: var(--cream-dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+    }
+    .video-link {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 28px;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold);
       text-decoration: none;
@@ -479,7 +511,7 @@
       padding-bottom: 2px;
       transition: color 0.2s, border-color 0.2s;
     }
-    .video-tg-link:hover { color: var(--gold-light); border-color: var(--gold); }
+    .video-link:hover { color: var(--gold-light); border-color: var(--gold); }
 
     /* ── REVIEWS ── */
     .reviews { background: var(--dark); }
@@ -893,17 +925,82 @@
   </div>
 </section>
 
+<!-- GALLERY -->
+<div class="gallery-section reveal">
+  <div class="gallery-grid">
+    <!-- tall left — витрина, центр кадра -->
+    <div class="g-item tall">
+      <img
+        src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+        alt="Витрина"
+        style="object-position: center center"
+      />
+      <div class="g-cap">Витрина</div>
+    </div>
+    <!-- правая колонка, верх — потолок и свет -->
+    <div class="g-item">
+      <img
+        src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+        alt="Интерьер"
+        style="object-position: right top"
+      />
+      <div class="g-cap">Интерьер</div>
+    </div>
+    <!-- правый верх — левая часть зала -->
+    <div class="g-item">
+      <img
+        src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+        alt="Ассортимент"
+        style="object-position: left center"
+      />
+      <div class="g-cap">Ассортимент</div>
+    </div>
+    <!-- правый низ — фасад с улицы (панорама) -->
+    <div class="g-item pano">
+      <img
+        src="https://static-pano.maps.yandex.ru/v1/?panoid=1296678613_672491257_23_1751282553&size=900%2C480&azimuth=-25.7&tilt=10&api_key=maps&signature=B9r7IB6_zKwPbbqh7jAQVJNsrXh4DUNtqvayvdlp2U4="
+        alt="Фасад"
+        style="object-position: center 35%"
+      />
+      <div class="g-cap">Фасад · Павшинская Пойма</div>
+    </div>
+    <!-- крайний правый низ — нижняя часть витрины -->
+    <div class="g-item">
+      <img
+        src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+        alt="Товары"
+        style="object-position: center bottom"
+      />
+      <div class="g-cap">Товары</div>
+    </div>
+  </div>
+</div>
+
 <!-- VIDEO -->
 <div class="video-section reveal">
-  <div class="video-bg"></div>
-  <div class="video-placeholder">
-    <div class="video-play-btn">
+  <div class="video-bg">
+    <img
+      src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+      alt=""
+    />
+  </div>
+  <div class="video-inner">
+    <a
+      href="https://yandex.ru/maps/org/bob_smoke/25693327910/gallery/?filter=video"
+      target="_blank"
+      class="video-play-btn"
+      title="Смотреть видео на Яндекс Картах"
+    >
       <div class="video-play-icon"></div>
-    </div>
-    <div class="video-title">Атмосфера Bob Smoke</div>
-    <div class="video-sub">Видео и сторис — в нашем Telegram и Instagram</div>
-    <a href="https://yandex.ru/maps/org/bob_smoke/25693327910/" target="_blank" class="video-tg-link">
-      Смотреть на Яндекс Картах
+    </a>
+    <div class="video-title">Bob Smoke изнутри</div>
+    <div class="video-sub">Видео из магазина — в галерее на Яндекс Картах</div>
+    <a
+      href="https://yandex.ru/maps/org/bob_smoke/25693327910/gallery/?filter=video"
+      target="_blank"
+      class="video-link"
+    >
+      Открыть галерею &amp; видео →
     </a>
   </div>
 </div>
