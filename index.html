@@ -710,6 +710,153 @@
       color: var(--gold-dim);
     }
 
+    /* ── AGE GATE ── */
+    .age-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .age-gate.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .age-gate-card {
+      text-align: center;
+      max-width: 420px;
+      padding: 56px 40px;
+      border: 1px solid rgba(184,148,58,0.15);
+      background: var(--dark);
+      border-radius: 2px;
+    }
+    .age-gate-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 32px;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .age-gate-logo span { color: var(--gold); }
+    .age-gate-icon {
+      width: 72px; height: 72px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 28px auto 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .age-gate-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .age-gate-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--cream-dim);
+      margin-bottom: 36px;
+    }
+    .age-gate-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .age-gate-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .age-gate-btn.confirm {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .age-gate-btn.confirm:hover { background: var(--gold-light); }
+    .age-gate-btn.deny {
+      background: transparent;
+      color: var(--cream-dim);
+      border: 1px solid rgba(232,226,213,0.15);
+    }
+    .age-gate-btn.deny:hover { border-color: rgba(232,226,213,0.3); color: var(--cream); }
+    .age-gate-warn {
+      display: none;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #c0392b;
+    }
+
+    body.no-scroll { overflow: hidden; }
+
+    /* ── GALLERY ── */
+    .gallery { background: var(--surface); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin-top: 48px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      aspect-ratio: 4/3;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.8) saturate(0.85);
+      transition: transform 0.6s ease, filter 0.4s;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.95) saturate(0.95);
+    }
+    .gallery-item-label {
+      position: absolute;
+      bottom: 16px; left: 16px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(10,9,7,0.75);
+      backdrop-filter: blur(8px);
+      padding: 8px 14px;
+      border: 1px solid rgba(184,148,58,0.2);
+      border-radius: 1px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .gallery-item-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── REVEAL ── */
     .reveal {
       opacity: 0;
@@ -742,6 +889,21 @@
 </head>
 <body>
 
+<!-- AGE GATE -->
+<div class="age-gate" id="ageGate">
+  <div class="age-gate-card">
+    <div class="age-gate-logo">Bob <span>Smoke</span></div>
+    <div class="age-gate-icon">18+</div>
+    <div class="age-gate-title">Подтвердите возраст</div>
+    <p class="age-gate-text">Данный сайт содержит информацию о табачной продукции. Для доступа вам должно быть не менее 18 лет.</p>
+    <div class="age-gate-actions">
+      <button class="age-gate-btn confirm" onclick="confirmAge()">Мне есть 18</button>
+      <button class="age-gate-btn deny" onclick="denyAge()">Мне нет 18</button>
+    </div>
+    <p class="age-gate-warn" id="ageWarn">Доступ на сайт разрешён только лицам старше 18 лет.</p>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Bob <span>Smoke</span></div>
@@ -756,7 +918,7 @@
 <section class="hero" id="home">
   <div class="hero-bg">
     <img
-      src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+      src="images/showcase.jpg"
       alt="Bob Smoke"
     />
   </div>
@@ -804,8 +966,8 @@
 <section class="about" id="about">
   <div class="about-photo reveal">
     <img
-      src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
-      alt="Bob Smoke — интерьер"
+      src="images/liquids.jpg"
+      alt="Bob Smoke — жидкости"
     />
     <div class="about-photo-label">Красногорск · Подмосковный б-р, 11</div>
   </div>
@@ -849,7 +1011,7 @@
     <div class="product-card wide">
       <div class="product-img">
         <img
-          src="https://avatars.mds.yandex.net/get-altay/14398723/2a000001937e3e0f6e77ce3f4b8b4107cc48/XXL_height"
+          src="images/showcase.jpg"
           alt="Табак для кальяна"
         />
       </div>
@@ -890,6 +1052,28 @@
       <p class="product-desc">Редкие энергетики, газировки и снеки, которых нет в обычных магазинах.</p>
     </div>
 
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="reveal">
+    <div class="eyebrow">Фотографии</div>
+    <h2 class="section-title">Наш <em>магазин</em></h2>
+  </div>
+  <div class="gallery-grid reveal" style="transition-delay:0.08s">
+    <div class="gallery-item">
+      <img src="images/interior.jpg" alt="Bob Smoke — интерьер магазина" />
+      <div class="gallery-item-label">Интерьер</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/liquids.jpg" alt="Bob Smoke — жидкости и вейп" />
+      <div class="gallery-item-label">Жидкости</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/showcase.jpg" alt="Bob Smoke — витрина с табаком" />
+      <div class="gallery-item-label">Витрина</div>
+    </div>
   </div>
 </section>
 
@@ -1051,6 +1235,22 @@
 </footer>
 
 <script>
+  function confirmAge() {
+    sessionStorage.setItem('ageConfirmed', 'true');
+    document.getElementById('ageGate').classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+  }
+  function denyAge() {
+    document.getElementById('ageWarn').style.display = 'block';
+  }
+  (function() {
+    if (sessionStorage.getItem('ageConfirmed') === 'true') {
+      document.getElementById('ageGate').classList.add('hidden');
+    } else {
+      document.body.classList.add('no-scroll');
+    }
+  })();
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
