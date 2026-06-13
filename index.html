@@ -434,6 +434,45 @@
     .assort-row:hover .assort-media img { transform: scale(1.05); filter: brightness(1) saturate(1); }
     .assort-row.left  .assort-media { grid-column: 2; }
     .assort-row.right .assort-media { grid-column: 1; grid-row: 1; }
+    /* ── PHOTO SCROLL STRIP ── */
+    .strip-head { text-align: center; margin: 88px 0 28px; }
+    .strip-head .eyebrow { justify-content: center; }
+    .strip-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .photo-strip {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 16px;
+      margin: 0 -8vw;
+    }
+    .photo-strip::-webkit-scrollbar { height: 3px; }
+    .photo-strip::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+    .photo-strip::-webkit-scrollbar-thumb { background: rgba(184,148,58,0.45); border-radius: 4px; }
+    .strip-track { display: flex; gap: 18px; width: max-content; padding: 0 8vw; }
+    .strip-item { flex: 0 0 auto; width: 300px; scroll-snap-align: center; margin: 0; }
+    .strip-item img {
+      width: 100%; height: 380px;
+      object-fit: cover;
+      display: block;
+      border-radius: 6px;
+      border: 1px solid rgba(184,148,58,0.14);
+      filter: brightness(0.82) saturate(0.88);
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+    .strip-item:hover img { transform: translateY(-4px); filter: brightness(1) saturate(1); }
+    .strip-item figcaption {
+      margin-top: 12px;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
 
     /* ── VIDEO ── */
     .video-section {
@@ -979,6 +1018,11 @@
       .assort-row.right.reveal { transform: translateX(28px); }
       .assort-row.left .assort-media,
       .assort-row.right .assort-media { grid-column: 1; grid-row: auto; margin: 18px 0 0 60px; }
+      .strip-head { margin: 56px 0 22px; }
+      .photo-strip { margin: 0 -20px; }
+      .strip-track { padding: 0 20px; }
+      .strip-item { width: 240px; }
+      .strip-item img { height: 300px; }
       .reviews-grid { grid-template-columns: 1fr; }
       .reviews-head { flex-direction: column; align-items: flex-start; gap: 24px; }
       .reviews-rating-block { text-align: left; }
@@ -1170,16 +1214,24 @@
       <div class="assort-node">05</div>
     </div>
 
-    <div class="assort-row right reveal">
-      <div class="assort-cell">
-        <div class="assort-name">Сигареты</div>
-        <p class="assort-desc">Сигареты и стики всех марок, включая редкие и привозные. Стик-табак, гильзы и фильтры Smoking для самокруток.</p>
-        <div class="assort-tags"><span class="assort-tag">Все марки</span><span class="assort-tag">Привозные</span><span class="assort-tag">Самокрутки</span></div>
-      </div>
-      <div class="assort-media"><img src="images/sigarety.webp" alt="Сигареты и табак" loading="lazy" /></div>
-      <div class="assort-node">06</div>
-    </div>
+  </div>
 
+  <div class="strip-head reveal">
+    <div class="eyebrow">Витрина</div>
+    <h3 class="strip-title">Загляни внутрь</h3>
+  </div>
+  <div class="photo-strip reveal">
+    <div class="strip-track">
+      <figure class="strip-item"><img src="images/strip-tabak-2.webp" alt="Стена табака Adalya и чаши" loading="lazy" /><figcaption>Стена табака</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-tabak-3.webp" alt="Премиум-табак Blackburn, Overdose" loading="lazy" /><figcaption>Премиум-линейки</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-tabak-4.webp" alt="Банки Musthave и Blackburn" loading="lazy" /><figcaption>Musthave &amp; Blackburn</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-tabak-5.webp" alt="Табак Swag, Magix и угли" loading="lazy" /><figcaption>Табак &amp; угли</figcaption></figure>
+      <figure class="strip-item"><img src="images/sigarety.webp" alt="Табак в банках и витрина" loading="lazy" /><figcaption>Десятки вкусов</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-pody-2.webp" alt="Одноразки Lost Mary, Pafos" loading="lazy" /><figcaption>Lost Mary &amp; Pafos</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-pody-3.webp" alt="POD-системы auro и RDQY" loading="lazy" /><figcaption>POD-системы</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-pody-4.webp" alt="Поды auro и RDQY на витрине" loading="lazy" /><figcaption>Поды в наличии</figcaption></figure>
+      <figure class="strip-item"><img src="images/strip-aksessuary.webp" alt="Трубки, зажигалки и аксессуары" loading="lazy" /><figcaption>Трубки &amp; зажигалки</figcaption></figure>
+    </div>
   </div>
 </section>
 
