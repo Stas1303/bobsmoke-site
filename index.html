@@ -885,6 +885,22 @@
       .contacts { grid-template-columns: 1fr; gap: 44px; }
       footer { flex-direction: column; gap: 20px; text-align: center; flex-wrap: wrap; }
     }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 12px, rgba(255,255,255,0.05) 12px 24px),
+        #1a1a1a;
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 <body>
@@ -917,10 +933,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg">
-    <img
-      src="images/showcase.jpg"
-      alt="Боб Табак"
-    />
+    <div class="photo-placeholder">Фото</div>
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Красногорск — Табак &amp; Аксессуары</div>
@@ -965,10 +978,7 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-photo reveal">
-    <img
-      src="images/liquids.jpg"
-      alt="Боб Табак — жидкости"
-    />
+    <div class="photo-placeholder">Фото</div>
     <div class="about-photo-label">Красногорск · Подмосковный б-р, 11</div>
   </div>
   <div class="about-text reveal" style="transition-delay:0.12s">
@@ -1010,10 +1020,7 @@
 
     <div class="product-card wide">
       <div class="product-img">
-        <img
-          src="images/showcase.jpg"
-          alt="Табак для кальяна"
-        />
+        <div class="photo-placeholder">Фото</div>
       </div>
       <div class="product-body">
         <div class="product-num">01</div>
@@ -1063,15 +1070,15 @@
   </div>
   <div class="gallery-grid reveal" style="transition-delay:0.08s">
     <div class="gallery-item">
-      <img src="images/interior.jpg" alt="Боб Табак — интерьер магазина" />
+      <div class="photo-placeholder">Фото</div>
       <div class="gallery-item-label">Интерьер</div>
     </div>
     <div class="gallery-item">
-      <img src="images/liquids.jpg" alt="Боб Табак — жидкости и вейп" />
+      <div class="photo-placeholder">Фото</div>
       <div class="gallery-item-label">Жидкости</div>
     </div>
     <div class="gallery-item">
-      <img src="images/showcase.jpg" alt="Боб Табак — витрина с табаком" />
+      <div class="photo-placeholder">Фото</div>
       <div class="gallery-item-label">Витрина</div>
     </div>
   </div>
