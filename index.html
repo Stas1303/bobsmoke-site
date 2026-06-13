@@ -70,6 +70,22 @@
       transition: color 0.25s;
     }
     .nav-links a:hover { color: var(--gold); }
+    .nav-burger {
+      display: none;
+      position: relative;
+      width: 30px; height: 20px;
+      background: none; border: 0; padding: 0; cursor: pointer; z-index: 120;
+    }
+    .nav-burger span {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: var(--cream); transition: transform 0.3s, opacity 0.3s, top 0.3s, bottom 0.3s;
+    }
+    .nav-burger span:nth-child(1) { top: 0; }
+    .nav-burger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .nav-burger span:nth-child(3) { bottom: 0; }
+    .nav-burger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
     /* ── HERO ── */
     .hero {
@@ -446,7 +462,7 @@
     }
     .photo-strip {
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
+      scroll-snap-type: x proximity;
       -webkit-overflow-scrolling: touch;
       padding-bottom: 16px;
       margin: 0 -8vw;
@@ -473,6 +489,48 @@
       text-transform: uppercase;
       color: var(--gold);
     }
+    .strip-item img { cursor: zoom-in; }
+    .strip-wrap { position: relative; }
+    .strip-arrow {
+      position: absolute; top: 190px;
+      transform: translateY(-50%);
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(10,9,7,0.7);
+      border: 1px solid rgba(184,148,58,0.4);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; line-height: 1;
+      cursor: pointer; z-index: 6;
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      transition: background 0.3s, color 0.3s, opacity 0.3s;
+    }
+    .strip-arrow:hover { background: var(--gold); color: var(--black); }
+    .strip-arrow.prev { left: 12px; }
+    .strip-arrow.next { right: 12px; }
+    .strip-arrow[disabled] { opacity: 0.25; cursor: default; }
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.93);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw; max-height: 88vh;
+      object-fit: contain; border-radius: 4px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: absolute; top: 22px; right: 30px;
+      background: none; border: 0; padding: 0;
+      color: var(--cream); font-size: 42px; line-height: 1;
+      cursor: pointer; transition: color 0.25s;
+    }
+    .lightbox-close:hover { color: var(--gold); }
 
     /* ── VIDEO ── */
     .video-section {
@@ -997,7 +1055,19 @@
     /* ── MOBILE ── */
     @media (max-width: 900px) {
       nav { padding: 18px 20px; }
-      .nav-links { display: none; }
+      .nav-burger { display: block; }
+      .nav-links {
+        position: fixed; inset: 0;
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 32px;
+        background: rgba(10,9,7,0.98);
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        z-index: 110;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 16px; letter-spacing: 0.2em; }
+      .strip-arrow { display: none; }
       section { padding: 72px 20px; }
       .hero-content { padding: 0 20px 72px; }
       .hero-meta { right: 20px; bottom: 72px; }
@@ -1068,7 +1138,8 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Боб <span>Табак</span></div>
-  <ul class="nav-links">
+  <button class="nav-burger" id="navBurger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#products">Ассортимент</a></li>
     <li><a href="#gallery">Фото</a></li>
     <li><a href="#reviews">Отзывы</a></li>
@@ -1220,7 +1291,10 @@
     <div class="eyebrow">Витрина</div>
     <h3 class="strip-title">Загляни внутрь</h3>
   </div>
-  <div class="photo-strip reveal">
+  <div class="strip-wrap reveal">
+    <button class="strip-arrow prev" id="stripPrev" aria-label="Назад">‹</button>
+    <button class="strip-arrow next" id="stripNext" aria-label="Вперёд">›</button>
+    <div class="photo-strip" id="photoStrip">
     <div class="strip-track">
       <figure class="strip-item"><img src="images/strip-tabak-2.webp" alt="Стена табака Adalya и чаши" loading="lazy" /><figcaption>Стена табака</figcaption></figure>
       <figure class="strip-item"><img src="images/strip-tabak-3.webp" alt="Премиум-табак Blackburn, Overdose" loading="lazy" /><figcaption>Премиум-линейки</figcaption></figure>
@@ -1231,6 +1305,7 @@
       <figure class="strip-item"><img src="images/strip-pody-3.webp" alt="POD-системы auro и RDQY" loading="lazy" /><figcaption>POD-системы</figcaption></figure>
       <figure class="strip-item"><img src="images/strip-pody-4.webp" alt="Поды auro и RDQY на витрине" loading="lazy" /><figcaption>Поды в наличии</figcaption></figure>
       <figure class="strip-item"><img src="images/strip-aksessuary.webp" alt="Трубки, зажигалки и аксессуары" loading="lazy" /><figcaption>Трубки &amp; зажигалки</figcaption></figure>
+    </div>
     </div>
   </div>
 </section>
@@ -1433,6 +1508,12 @@
   </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">×</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
 <script>
   function confirmAge() {
     sessionStorage.setItem('ageConfirmed', 'true');
@@ -1463,6 +1544,61 @@
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
     });
   });
+
+  // burger menu
+  (function() {
+    const burger = document.getElementById('navBurger');
+    const links = document.getElementById('navLinks');
+    if (!burger || !links) return;
+    const close = () => { burger.classList.remove('open'); links.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); };
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      links.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  })();
+
+  // photo strip arrows
+  (function() {
+    const strip = document.getElementById('photoStrip');
+    const prev = document.getElementById('stripPrev');
+    const next = document.getElementById('stripNext');
+    if (!strip || !prev || !next) return;
+    const step = () => Math.max(strip.clientWidth * 0.8, 318);
+    const update = () => {
+      prev.disabled = strip.scrollLeft <= 4;
+      next.disabled = strip.scrollLeft >= strip.scrollWidth - strip.clientWidth - 4;
+    };
+    prev.addEventListener('click', () => strip.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => strip.scrollBy({ left: step(), behavior: 'smooth' }));
+    strip.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  // lightbox
+  (function() {
+    const box = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('lightboxClose');
+    if (!box || !img) return;
+    const open = (src, alt) => {
+      img.src = src; img.alt = alt || '';
+      box.classList.add('open'); box.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    };
+    const close = () => {
+      box.classList.remove('open'); box.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll'); img.src = '';
+    };
+    document.querySelectorAll('.strip-item img').forEach(el => {
+      el.addEventListener('click', () => open(el.currentSrc || el.src, el.alt));
+    });
+    closeBtn.addEventListener('click', close);
+    box.addEventListener('click', e => { if (e.target === box) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && box.classList.contains('open')) close(); });
+  })();
 </script>
 </body>
 </html>
