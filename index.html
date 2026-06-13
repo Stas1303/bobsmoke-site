@@ -323,76 +323,96 @@
       align-items: flex-end;
       margin-bottom: 64px;
     }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(184,148,58,0.08);
-    }
-    .product-card {
-      background: var(--dark);
-      padding: 44px 36px;
+    /* ── ASSORTMENT ZIPPER ── */
+    .assort {
       position: relative;
-      cursor: default;
-      transition: background 0.3s;
-      overflow: hidden;
+      max-width: 940px;
+      margin: 56px auto 0;
     }
-    .product-card::before {
+    .assort::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 2px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, transparent, rgba(184,148,58,0.4) 10%, rgba(184,148,58,0.4) 90%, transparent);
     }
-    .product-card:hover { background: var(--surface); }
-    .product-card:hover::before { transform: scaleX(1); }
-    .product-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      color: rgba(184,148,58,0.2);
-      letter-spacing: 0.1em;
-      margin-bottom: 28px;
+    .assort-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 30px 0;
     }
-    .product-name {
+    .assort-cell { padding: 0 56px; }
+    .assort-row.left  .assort-cell { grid-column: 1; text-align: right; }
+    .assort-row.right .assort-cell { grid-column: 2; grid-row: 1; text-align: left; }
+    .assort-node {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px; height: 46px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--black);
+      border: 1px solid rgba(184,148,58,0.4);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 26px;
+      font-size: 15px;
+      color: var(--gold);
+      z-index: 2;
+      transition: border-color 0.4s, box-shadow 0.4s, color 0.4s;
+    }
+    .assort-row:hover .assort-node {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      box-shadow: 0 0 0 6px rgba(184,148,58,0.06), 0 0 22px rgba(184,148,58,0.25);
+    }
+    .assort-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
       font-weight: 600;
       color: var(--white);
       line-height: 1.1;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      transition: color 0.3s;
     }
-    .product-desc {
-      font-size: 13px;
+    .assort-row:hover .assort-name { color: var(--gold-light); }
+    .assort-desc {
+      font-size: 13.5px;
       font-weight: 300;
       line-height: 1.7;
       color: var(--cream-dim);
+      max-width: 360px;
     }
-    .product-card.wide {
-      grid-column: span 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-      padding: 0;
+    .assort-row.left .assort-desc { margin-left: auto; }
+    .assort-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
     }
-    .product-card.wide .product-img {
-      height: 280px;
-      overflow: hidden;
+    .assort-row.left .assort-tags { justify-content: flex-end; }
+    .assort-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 5px 11px;
+      border: 1px solid rgba(184,148,58,0.22);
+      border-radius: 100px;
+      background: rgba(184,148,58,0.05);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
     }
-    .product-card.wide .product-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: brightness(0.6) saturate(0.6);
-      transition: transform 0.6s, filter 0.4s;
+    .assort-row:hover .assort-tag {
+      background: rgba(184,148,58,0.12);
+      border-color: rgba(184,148,58,0.45);
+      color: var(--gold-light);
     }
-    .product-card.wide:hover .product-img img {
-      transform: scale(1.05);
-      filter: brightness(0.75) saturate(0.75);
-    }
-    .product-card.wide .product-body { padding: 44px 36px; }
+    /* reveal: text slides in from its side toward the center spine */
+    .assort-row.left.reveal  { opacity: 0; transform: translateX(-48px); }
+    .assort-row.right.reveal { opacity: 0; transform: translateX(48px); }
+    .assort-row.reveal.visible { opacity: 1; transform: translateX(0); }
+    .assort-row .assort-node { transition: border-color 0.4s, box-shadow 0.4s, color 0.4s, transform 0.5s; }
 
     /* ── VIDEO ── */
     .video-section {
@@ -923,10 +943,19 @@
       .hero-meta { right: 20px; bottom: 72px; }
       .about { grid-template-columns: 1fr; gap: 40px; }
       .about-photo { height: 320px; }
-      .products-grid { grid-template-columns: 1fr; }
       .products-head { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .product-card.wide { grid-column: span 1; grid-template-columns: 1fr; }
-      .product-card.wide .product-img { height: 220px; }
+      /* mobile: spine moves left, all rows align to one side */
+      .assort { margin-top: 36px; }
+      .assort::before { left: 23px; }
+      .assort-row { grid-template-columns: 1fr; padding: 22px 0; }
+      .assort-row.left .assort-cell,
+      .assort-row.right .assort-cell { grid-column: 1; grid-row: auto; text-align: left; padding: 0 0 0 60px; }
+      .assort-node { left: 23px; }
+      .assort-row.left .assort-desc,
+      .assort-row.left .assort-tags { margin-left: 0; justify-content: flex-start; }
+      .assort-desc { max-width: 100%; }
+      .assort-row.left.reveal,
+      .assort-row.right.reveal { transform: translateX(28px); }
       .reviews-grid { grid-template-columns: 1fr; }
       .reviews-head { flex-direction: column; align-items: flex-start; gap: 24px; }
       .reviews-rating-block { text-align: left; }
@@ -1065,47 +1094,60 @@
       <h2 class="section-title">Ассортимент</h2>
     </div>
   </div>
-  <div class="products-grid reveal" style="transition-delay:0.08s">
+  <div class="assort">
 
-    <div class="product-card wide">
-      <div class="product-img">
-        <img src="images/kalyany-veipy.webp" alt="Кальяны и вейпы" />
+    <div class="assort-row left reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Табак для кальяна</div>
+        <p class="assort-desc">От лёгкой классики до тёмного крепкача. Десятки брендов и редкие вкусы — подберём смесь под твоё настроение.</p>
+        <div class="assort-tags"><span class="assort-tag">Светлый</span><span class="assort-tag">Тёмный</span><span class="assort-tag">Премиум</span></div>
       </div>
-      <div class="product-body">
-        <div class="product-num">01</div>
-        <div class="product-name">Табак для кальяна</div>
-        <p class="product-desc">Широкий выбор марок и вкусов — от классики до редких позиций. Светлые и тёмные смеси, разная крепость. Персонал поможет подобрать под ваш вкус.</p>
+      <div class="assort-node">01</div>
+    </div>
+
+    <div class="assort-row right reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Электронные сигареты</div>
+        <p class="assort-desc">Одноразки, поды и моды на любую затяжку. С никотином и без — выбор устройств, который реально впечатляет.</p>
+        <div class="assort-tags"><span class="assort-tag">Vaporesso</span><span class="assort-tag">Поды</span><span class="assort-tag">Одноразки</span></div>
       </div>
+      <div class="assort-node">02</div>
     </div>
 
-    <div class="product-card">
-      <div class="product-num">02</div>
-      <div class="product-name">Электронные сигареты</div>
-      <p class="product-desc">Одноразки, поды, моды. Огромный выбор устройств и жидкостей — от никотинсодержащих до безникотиновых.</p>
+    <div class="assort-row left reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Сигары &amp; сигареты</div>
+        <p class="assort-desc">Сигареты всех марок, включая редкие и привозные. Сигары — для тех, кто ценит особый момент.</p>
+        <div class="assort-tags"><span class="assort-tag">Редкие</span><span class="assort-tag">Привозные</span><span class="assort-tag">Сигары</span></div>
+      </div>
+      <div class="assort-node">03</div>
     </div>
 
-    <div class="product-card">
-      <div class="product-num">03</div>
-      <div class="product-name">Сигары &amp; сигареты</div>
-      <p class="product-desc">Сигареты различных марок, включая редкие. Сигары — для тех, кто ценит формат.</p>
+    <div class="assort-row right reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Жидкости для вейпа</div>
+        <p class="assort-desc">Солевой никотин и классика, фруктовые и десертные — линейка вкусов, которая не успевает надоесть.</p>
+        <div class="assort-tags"><span class="assort-tag">Salt</span><span class="assort-tag">Classic</span><span class="assort-tag">Десерты</span></div>
+      </div>
+      <div class="assort-node">04</div>
     </div>
 
-    <div class="product-card">
-      <div class="product-num">04</div>
-      <div class="product-name">Жидкости для вейпа</div>
-      <p class="product-desc">Разнообразные жидкости — солевой никотин и классика. Большая линейка вкусов.</p>
+    <div class="assort-row left reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Аксессуары</div>
+        <p class="assort-desc">Чаши, угли, щипцы, мундштуки и кальяны целиком. Всё, чтобы собрать сетап и курить в кайф.</p>
+        <div class="assort-tags"><span class="assort-tag">Чаши</span><span class="assort-tag">Угли</span><span class="assort-tag">Кальяны</span></div>
+      </div>
+      <div class="assort-node">05</div>
     </div>
 
-    <div class="product-card">
-      <div class="product-num">05</div>
-      <div class="product-name">Аксессуары</div>
-      <p class="product-desc">Чаши, угли, щипцы, мундштуки, кальяны. Всё для комфортного использования.</p>
-    </div>
-
-    <div class="product-card">
-      <div class="product-num">06</div>
-      <div class="product-name">Напитки &amp; снеки</div>
-      <p class="product-desc">Редкие энергетики, газировки и снеки, которых нет в обычных магазинах.</p>
+    <div class="assort-row right reveal">
+      <div class="assort-cell">
+        <div class="assort-name">Напитки &amp; снеки</div>
+        <p class="assort-desc">Редкие энергетики, газировки и снеки, которых нет в сетевых магазинах. Вкусняшки под любую компанию.</p>
+        <div class="assort-tags"><span class="assort-tag">Энергетики</span><span class="assort-tag">AriZona</span><span class="assort-tag">Снеки</span></div>
+      </div>
+      <div class="assort-node">06</div>
     </div>
 
   </div>
