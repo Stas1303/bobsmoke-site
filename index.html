@@ -416,6 +416,24 @@
     .assort-row.right.reveal { opacity: 0; transform: translateX(48px); }
     .assort-row.reveal.visible { opacity: 1; transform: translateX(0); }
     .assort-row .assort-node { transition: border-color 0.4s, box-shadow 0.4s, color 0.4s, transform 0.5s; }
+    /* photo on the opposite side of the spine */
+    .assort-media {
+      overflow: hidden;
+      border-radius: 6px;
+      aspect-ratio: 4 / 3;
+      border: 1px solid rgba(184,148,58,0.16);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+    .assort-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.8) saturate(0.85);
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+    .assort-row:hover .assort-media img { transform: scale(1.05); filter: brightness(1) saturate(1); }
+    .assort-row.left  .assort-media { grid-column: 2; }
+    .assort-row.right .assort-media { grid-column: 1; grid-row: 1; }
 
     /* ── VIDEO ── */
     .video-section {
@@ -959,6 +977,8 @@
       .assort-desc { max-width: 100%; }
       .assort-row.left.reveal,
       .assort-row.right.reveal { transform: translateX(28px); }
+      .assort-row.left .assort-media,
+      .assort-row.right .assort-media { grid-column: 1; grid-row: auto; margin: 18px 0 0 60px; }
       .reviews-grid { grid-template-columns: 1fr; }
       .reviews-head { flex-direction: column; align-items: flex-start; gap: 24px; }
       .reviews-rating-block { text-align: left; }
@@ -1103,54 +1123,60 @@
     <div class="assort-row left reveal">
       <div class="assort-cell">
         <div class="assort-name">Табак для кальяна</div>
-        <p class="assort-desc">От лёгкой классики до тёмного крепкача. Десятки брендов и редкие вкусы — подберём смесь под твоё настроение.</p>
-        <div class="assort-tags"><span class="assort-tag">Светлый</span><span class="assort-tag">Тёмный</span><span class="assort-tag">Премиум</span></div>
+        <p class="assort-desc">Целая стена вкусов — от лёгкой классики до тёмного крепкача. Musthave, Blackburn, Brusko, Overdose и премиум-линейки «искусства курения».</p>
+        <div class="assort-tags"><span class="assort-tag">Musthave</span><span class="assort-tag">Blackburn</span><span class="assort-tag">Премиум</span></div>
       </div>
+      <div class="assort-media"><img src="images/tabak-kalyan.webp" alt="Премиальный табак для кальяна" loading="lazy" /></div>
       <div class="assort-node">01</div>
     </div>
 
     <div class="assort-row right reveal">
       <div class="assort-cell">
-        <div class="assort-name">Электронные сигареты</div>
-        <p class="assort-desc">Одноразки, поды и моды на любую затяжку. С никотином и без — выбор устройств, который реально впечатляет.</p>
-        <div class="assort-tags"><span class="assort-tag">Vaporesso</span><span class="assort-tag">Поды</span><span class="assort-tag">Одноразки</span></div>
+        <div class="assort-name">Одноразки</div>
+        <p class="assort-desc">PLONQ, FLONQ, Lost Mary, Pafos и другие — до 20 000 затяжек, десятки вкусов. Яркие, заряженные, всегда в наличии.</p>
+        <div class="assort-tags"><span class="assort-tag">PLONQ</span><span class="assort-tag">Lost Mary</span><span class="assort-tag">20 000</span></div>
       </div>
+      <div class="assort-media"><img src="images/odnorazki.webp" alt="Одноразовые электронные сигареты" loading="lazy" /></div>
       <div class="assort-node">02</div>
     </div>
 
     <div class="assort-row left reveal">
       <div class="assort-cell">
-        <div class="assort-name">Сигары &amp; сигареты</div>
-        <p class="assort-desc">Сигареты всех марок, включая редкие и привозные. Сигары — для тех, кто ценит особый момент.</p>
-        <div class="assort-tags"><span class="assort-tag">Редкие</span><span class="assort-tag">Привозные</span><span class="assort-tag">Сигары</span></div>
+        <div class="assort-name">POD-системы и вейпы</div>
+        <p class="assort-desc">Устройства и моды Vaporesso, Voopoo, auro — под любой стиль парения. Стартовые наборы и продвинутые сетапы.</p>
+        <div class="assort-tags"><span class="assort-tag">Vaporesso</span><span class="assort-tag">Voopoo</span><span class="assort-tag">POD</span></div>
       </div>
+      <div class="assort-media"><img src="images/pody-veipy.webp" alt="POD-системы и вейп-устройства" loading="lazy" /></div>
       <div class="assort-node">03</div>
     </div>
 
     <div class="assort-row right reveal">
       <div class="assort-cell">
         <div class="assort-name">Жидкости для вейпа</div>
-        <p class="assort-desc">Солевой никотин и классика, фруктовые и десертные — линейка вкусов, которая не успевает надоесть.</p>
-        <div class="assort-tags"><span class="assort-tag">Salt</span><span class="assort-tag">Classic</span><span class="assort-tag">Десерты</span></div>
+        <p class="assort-desc">Солевой никотин и классика, фруктовые и десертные. Fumo, ГРЕХ и другие линейки — вкусы, которые не успевают надоесть.</p>
+        <div class="assort-tags"><span class="assort-tag">Salt</span><span class="assort-tag">Fumo</span><span class="assort-tag">Десерты</span></div>
       </div>
+      <div class="assort-media"><img src="images/zhidkosti.webp" alt="Жидкости для вейпа" loading="lazy" /></div>
       <div class="assort-node">04</div>
     </div>
 
     <div class="assort-row left reveal">
       <div class="assort-cell">
-        <div class="assort-name">Аксессуары</div>
-        <p class="assort-desc">Чаши, угли, щипцы, мундштуки и кальяны целиком. Всё, чтобы собрать сетап и курить в кайф.</p>
-        <div class="assort-tags"><span class="assort-tag">Чаши</span><span class="assort-tag">Угли</span><span class="assort-tag">Кальяны</span></div>
+        <div class="assort-name">Чаши, угли и аксессуары</div>
+        <p class="assort-desc">Чаши на любой жар, угли Cocobrico и Crown, щипцы, мундштуки, трубки и зажигалки. Всё, чтобы собрать сетап под себя.</p>
+        <div class="assort-tags"><span class="assort-tag">Чаши</span><span class="assort-tag">Угли</span><span class="assort-tag">Трубки</span></div>
       </div>
+      <div class="assort-media"><img src="images/chashi-ugli.webp" alt="Кальянные чаши, угли и аксессуары" loading="lazy" /></div>
       <div class="assort-node">05</div>
     </div>
 
     <div class="assort-row right reveal">
       <div class="assort-cell">
-        <div class="assort-name">Напитки &amp; снеки</div>
-        <p class="assort-desc">Редкие энергетики, газировки и снеки, которых нет в сетевых магазинах. Вкусняшки под любую компанию.</p>
-        <div class="assort-tags"><span class="assort-tag">Энергетики</span><span class="assort-tag">AriZona</span><span class="assort-tag">Снеки</span></div>
+        <div class="assort-name">Сигареты</div>
+        <p class="assort-desc">Сигареты и стики всех марок, включая редкие и привозные. Стик-табак, гильзы и фильтры Smoking для самокруток.</p>
+        <div class="assort-tags"><span class="assort-tag">Все марки</span><span class="assort-tag">Привозные</span><span class="assort-tag">Самокрутки</span></div>
       </div>
+      <div class="assort-media"><img src="images/sigarety.webp" alt="Сигареты и табак" loading="lazy" /></div>
       <div class="assort-node">06</div>
     </div>
 
