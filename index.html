@@ -669,6 +669,46 @@
     }
     .map-chip-addr { font-size: 11px; color: var(--cream-dim); margin-top: 3px; }
 
+    .facade {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      max-height: 540px;
+    }
+    .facade img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      filter: brightness(0.86) saturate(0.92);
+      transition: transform 0.8s ease, filter 0.5s;
+    }
+    .facade:hover img { transform: scale(1.03); filter: brightness(1) saturate(1); }
+    .facade::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,9,7,0.85) 0%, rgba(10,9,7,0) 40%);
+      pointer-events: none;
+    }
+    .facade-label {
+      position: absolute;
+      left: 56px; bottom: 32px;
+      z-index: 2;
+    }
+    .facade-label .eyebrow { margin-bottom: 8px; }
+    .facade-label h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .facade-label h3 em { font-style: italic; color: var(--gold-light); }
+    .facade-label p { font-size: 13px; color: var(--cream-dim); margin-top: 6px; }
+    @media (max-width: 700px) {
+      .facade-label { left: 24px; bottom: 22px; }
+    }
+
     /* ── FOOTER ── */
     footer {
       background: var(--dark);
@@ -1243,6 +1283,16 @@
       <div class="map-chip-name">Боб Табак</div>
       <div class="map-chip-addr">Подмосковный б-р, 11 · Красногорск</div>
     </div>
+  </div>
+</section>
+
+<!-- FACADE -->
+<section class="facade reveal">
+  <img src="images/fasad.webp" alt="Боб Табак — вход в магазин, Подмосковный бульвар 11, Красногорск" loading="lazy" />
+  <div class="facade-label">
+    <div class="eyebrow">Найди нас</div>
+    <h3>Ищи вывеску <em>«Боб Табак»</em></h3>
+    <p>Подмосковный б-р, 11 · Красногорск · вход с улицы по ступеням</p>
   </div>
 </section>
 
