@@ -810,43 +810,48 @@
     /* ── GALLERY ── */
     .gallery { background: var(--surface); }
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
+      column-count: 3;
+      column-gap: 14px;
       margin-top: 48px;
     }
     .gallery-item {
       position: relative;
       overflow: hidden;
-      border-radius: 2px;
-      aspect-ratio: 4/3;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      break-inside: avoid;
+      border: 1px solid rgba(184,148,58,0.12);
     }
     .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: brightness(0.8) saturate(0.85);
-      transition: transform 0.6s ease, filter 0.4s;
+      width: 100%;
+      display: block;
+      filter: brightness(0.82) saturate(0.88);
+      transition: transform 0.7s ease, filter 0.4s;
+    }
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,9,7,0.78) 0%, rgba(10,9,7,0) 45%);
+      pointer-events: none;
+      transition: opacity 0.4s;
     }
     .gallery-item:hover img {
       transform: scale(1.05);
-      filter: brightness(0.95) saturate(0.95);
+      filter: brightness(1) saturate(1);
     }
     .gallery-item-label {
       position: absolute;
       bottom: 16px; left: 16px;
-      font-size: 10px;
+      z-index: 2;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold);
-      background: rgba(10,9,7,0.75);
-      backdrop-filter: blur(8px);
-      padding: 8px 14px;
-      border: 1px solid rgba(184,148,58,0.2);
-      border-radius: 1px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.3s, transform 0.3s;
+      transform: translateY(4px);
+      opacity: 0.92;
+      transition: transform 0.3s, opacity 0.3s;
     }
     .gallery-item:hover .gallery-item-label {
       opacity: 1;
@@ -854,7 +859,11 @@
     }
 
     @media (max-width: 900px) {
-      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-grid { column-count: 2; column-gap: 10px; }
+      .gallery-item { margin-bottom: 10px; }
+    }
+    @media (max-width: 520px) {
+      .gallery-grid { column-count: 1; }
     }
 
     /* ── REVEAL ── */
@@ -933,7 +942,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg">
-    <div class="photo-placeholder">Фото</div>
+    <img src="images/zal-ostrov.webp" alt="Боб Табак — торговый зал" />
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Красногорск — Табак &amp; Аксессуары</div>
@@ -978,7 +987,7 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-photo reveal">
-    <div class="photo-placeholder">Фото</div>
+    <img src="images/kalyany-okno.webp" alt="Боб Табак — кальяны" />
     <div class="about-photo-label">Красногорск · Подмосковный б-р, 11</div>
   </div>
   <div class="about-text reveal" style="transition-delay:0.12s">
@@ -1020,7 +1029,7 @@
 
     <div class="product-card wide">
       <div class="product-img">
-        <div class="photo-placeholder">Фото</div>
+        <img src="images/kalyany-veipy.webp" alt="Кальяны и вейпы" />
       </div>
       <div class="product-body">
         <div class="product-num">01</div>
@@ -1070,16 +1079,40 @@
   </div>
   <div class="gallery-grid reveal" style="transition-delay:0.08s">
     <div class="gallery-item">
-      <div class="photo-placeholder">Фото</div>
-      <div class="gallery-item-label">Интерьер</div>
+      <img src="images/napitki-holodilnik.webp" alt="Энергетики и вода" loading="lazy" />
+      <div class="gallery-item-label">Энергетики &amp; вода</div>
     </div>
     <div class="gallery-item">
-      <div class="photo-placeholder">Фото</div>
-      <div class="gallery-item-label">Жидкости</div>
+      <img src="images/veipy-vitrina.webp" alt="Вейпы и поды" loading="lazy" />
+      <div class="gallery-item-label">Вейпы &amp; поды</div>
     </div>
     <div class="gallery-item">
-      <div class="photo-placeholder">Фото</div>
-      <div class="gallery-item-label">Витрина</div>
+      <img src="images/morozhenoe-sladkoe.webp" alt="Мороженое" loading="lazy" />
+      <div class="gallery-item-label">Мороженое</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/stellazh-sneki.webp" alt="Снеки и напитки" loading="lazy" />
+      <div class="gallery-item-label">Снеки</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/pivo-holodilnik.webp" alt="Пиво" loading="lazy" />
+      <div class="gallery-item-label">Пиво</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/sladosti-ostrov.webp" alt="Сладости" loading="lazy" />
+      <div class="gallery-item-label">Сладости</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/chipsy-shokolad.webp" alt="Чипсы и шоколад" loading="lazy" />
+      <div class="gallery-item-label">Чипсы &amp; шоколад</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/kalyany-veipy.webp" alt="Кальяны" loading="lazy" />
+      <div class="gallery-item-label">Кальяны</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/zal-ostrov.webp" alt="Торговый зал" loading="lazy" />
+      <div class="gallery-item-label">Газировка &amp; лимонады</div>
     </div>
   </div>
 </section>
