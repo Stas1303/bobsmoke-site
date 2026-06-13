@@ -24,6 +24,7 @@
     }
 
     html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 88px; }
 
     body {
       background: var(--black);
@@ -319,10 +320,12 @@
     .products { background: var(--black); }
     .products-head {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      text-align: center;
       align-items: flex-end;
       margin-bottom: 64px;
     }
+    .products-head .eyebrow { justify-content: center; }
     /* ── ASSORTMENT ZIPPER ── */
     .assort {
       position: relative;
@@ -1003,6 +1006,7 @@
   <div class="nav-logo">Боб <span>Табак</span></div>
   <ul class="nav-links">
     <li><a href="#products">Ассортимент</a></li>
+    <li><a href="#gallery">Фото</a></li>
     <li><a href="#reviews">Отзывы</a></li>
     <li><a href="#contacts">Контакты</a></li>
   </ul>
