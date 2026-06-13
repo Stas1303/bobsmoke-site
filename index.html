@@ -489,7 +489,10 @@
       text-transform: uppercase;
       color: var(--gold);
     }
-    .strip-item img { cursor: zoom-in; }
+    .strip-item img,
+    .gallery-item img,
+    .about-photo img,
+    .facade img { cursor: zoom-in; }
     .strip-wrap { position: relative; }
     .strip-arrow {
       position: absolute; top: 190px;
@@ -1577,12 +1580,13 @@
     update();
   })();
 
-  // lightbox
+  // lightbox — any content photo opens fullscreen
   (function() {
     const box = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
     const closeBtn = document.getElementById('lightboxClose');
     if (!box || !img) return;
+    const SEL = '.strip-item img, .gallery-item img, .about-photo img, .facade img';
     const open = (src, alt) => {
       img.src = src; img.alt = alt || '';
       box.classList.add('open'); box.setAttribute('aria-hidden', 'false');
@@ -1592,8 +1596,9 @@
       box.classList.remove('open'); box.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('no-scroll'); img.src = '';
     };
-    document.querySelectorAll('.strip-item img').forEach(el => {
-      el.addEventListener('click', () => open(el.currentSrc || el.src, el.alt));
+    document.addEventListener('click', e => {
+      const el = e.target.closest(SEL);
+      if (el) { e.preventDefault(); open(el.currentSrc || el.src, el.alt); }
     });
     closeBtn.addEventListener('click', close);
     box.addEventListener('click', e => { if (e.target === box) close(); });
